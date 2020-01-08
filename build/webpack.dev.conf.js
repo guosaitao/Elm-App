@@ -10,6 +10,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
+//拿到本地json数据
+var express=require('express')
+var app=express()
+var appData=require('../static/mock/data.json')
+var seller =appData.seller
+var goods =appData.goods
+var appraise =appData.appraise
+
+//编写路由
+var appRouter=express.Router()
+//所有api接口，都会通过api这个路由导向具体路由
+app.use('./api',appRouter)
+
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
@@ -42,7 +55,33 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
-    }
+    },
+    before (app) {
+      app.get('/api/seller', function (req, res) {
+       // 服务端收到请求后返回给客户端一个json数据
+       res.json({
+        // 当我们数据正常时，我们通过传递errno字符为0表示数据正常
+        errno: 0,
+        data: seller
+       })
+      }),
+      app.get('/api/goods', function (req, res) {
+        // 服务端收到请求后返回给客户端一个json数据
+        res.json({
+         // 当我们数据正常时，我们通过传递errno字符为0表示数据正常
+         errno: 0,
+         data: goods
+        })
+       }),
+       app.get('/api/appraise', function (req, res) {
+        // 服务端收到请求后返回给客户端一个json数据
+        res.json({
+         // 当我们数据正常时，我们通过传递errno字符为0表示数据正常
+         errno: 0,
+         data: appraise
+        })
+       })
+     }
   },
   plugins: [
     new webpack.DefinePlugin({

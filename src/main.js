@@ -3,7 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import '@/assets/styles/reset.css'
+import '@/assets/styles/border.css'
+import { Row, Col,Sidebar, SidebarItem } from 'vant';
 
+Vue.use(Row).use(Col).use(Sidebar).use(SidebarItem)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
