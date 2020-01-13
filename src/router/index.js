@@ -20,7 +20,7 @@ export default new Router({
           path: '/goods',
           name: 'ElmGoods',
           component: ElmGoods,
-          redirect:"/goodslist/0",
+          //redirect:"/goodslist/0",
           children:[
             {
               path: '/goodslist/:index',
